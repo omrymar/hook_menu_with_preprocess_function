@@ -1,0 +1,4 @@
+name = My render menu
+description = My first hook menu with render arrays
+package = custom module
+core = 7.x

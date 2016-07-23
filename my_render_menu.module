@@ -1,0 +1,248 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+
+function my_render_menu_theme($existing, $type, $theme, $path) {
+  $items = array();
+
+  $items['my_render_menu_content'] = array(
+    'render element' => 'my_render',
+    'template' => 'templates/my_render_menu_content',
+  );
+
+  $items['my_render_menu_message'] = array(
+    'variables' => array('message' => NULL),
+    'template' => 'templates/my_render_menu_message',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_menu().
+ */
+
+function my_render_menu_menu(){
+  $items['admin/my_menu'] = array(
+    'title' => 'My render menu',
+    'description' => 'History of K-1 fighters',
+    'page callback' => 'my_render_menu_page',
+    'weight' => '10',
+    'file' => 'my_render_menu.pages.inc',
+    //'type' => MENU_LOCAL_TASK,
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  );
+
+  $items['admin/my_menu/history_of_badr'] = array(
+    'title' => 'History of Badr Hari',
+    'description' => 'Life history of Badr Hari',
+    'page callback' => 'my_render_menu_history_of_badr_page',
+    'file' => 'my_render_menu.pages.inc',
+    //'access callback' => t('user_is_logged_in'),
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  );
+  
+  $items['admin/my_menu/history_of_badr/wins'] = array(
+    'title' => 'History of wins of Badr Hari',
+    'description' => 'Life history of Badr Hari',
+    'page callback' => 'my_render_menu_history_of_badr_wins_page',
+    'file' => 'my_render_menu.pages.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  );
+
+  $items['admin/my_menu/history_of_badr/loss'] = array(
+    'title' => 'History of losses of Badr Hari',
+    'description' => 'Life history of Badr Hari',
+    'page callback' => 'my_render_menu_history_of_badr_loss_page',
+    'file' => 'my_render_menu.pages.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  );
+
+  $items['admin/my_menu/history_of_alistar'] = array(
+    'title' => 'History of Alistar Overim',
+    'description' => 'Life history of Alistar Overim',
+    'page callback' => 'my_render_menu_history_of_alistar_page',
+    'file' => 'my_render_menu.pages.inc',
+    //'access callback' => t('user_is_logged_in'),
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  );
+
+  $items['admin/my_menu/history_of_alistar/wins'] = array(
+    'title' => 'History of wins of Alistar Overim',
+    'description' => 'Life history of Alistar Overim',
+    'page callback' => 'my_render_menu_history_of_alistar_wins_page',
+    'file' => 'my_render_menu.pages.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  );
+
+  $items['admin/my_menu/test_item'] = array(
+    'title' => 'Test item',
+    'description' => 'Test item',
+    'page callback' => 'my_render_menu_test_item_page',
+    'weight' => '1',
+    'file' => 'my_render_menu.pages.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  );
+
+  $items['admin/my_menu/test_item/test_item_1'] = array(
+    'title' => 'Tab 1',
+    //'type' => MENU_DEFAULT_LOCAL_TASK,
+    'description' => 'First tab',
+    'page callback' => 'my_render_menu_test_item_1_page',
+    'weight' => '2',
+    'file' => 'my_render_menu.pages.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  );
+
+  $items['admin/my_menu/test_item/test_item_2'] = array(
+    'title' => 'Tab 2',
+    //'type' => MENU_LOCAL_TASK,
+    'description' => 'Second tab',
+    'page callback' => 'my_render_menu_test_item_2_page',
+    'weight' => '3',
+    'file' => 'my_render_menu.pages.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  );
+
+  $items['admin/my_menu/test_item/test_item_2/item_2'] = array(
+    'title' => 'Tab 2_2',
+    //'type' => MENU_LOCAL_TASK,
+    'description' => 'Second tab',
+    'page callback' => 'my_render_menu_test_item_2_2_page',
+    'weight' => '4',
+    'file' => 'my_render_menu.pages.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  );
+
+  $items['test_altered_page'] = array(
+    'title' => 'Altered page',
+    'description' => 'Altered page',
+    'page callback' => 'my_render_menu_test_altered_page',
+    'file' => 'my_render_menu.pages.inc',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  );
+
+  $items['get_node/%node/node_show'] = array(
+    'title callback' => 'my_render_menu_node_of_item',
+    'title' => 'Show a simple node',
+    'title arguments' => array(1),
+    'page callback' => 'my_render_menu_show_node_item',
+    'file' => 'my_render_menu.pages.inc',
+    'page arguments' => array(1),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+function my_render_menu_menu_permission() {
+  return array(
+    'access to history_of_alistar page' => array(
+      'title' => t('Access history_of_alistar page'),
+      'description' => t('Administrator'),
+      'access callback' => t('user_is_logged_in'),
+    ),
+    'access to history_of_badr page' => array(
+      'title' => t('Access history_of_badr page'),
+      'description' => t('Administrator'),
+      'access callback' => t('user_is_logged_in'),
+    ),
+
+  );
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+
+function my_render_menu_menu_alter(&$items) {
+  if (!empty($items['test_altered_page'])) {
+    $items['test_altered_page_new'] = $items['test_altered_page'];
+    $items['test_altered_page_new']['title'] = 'Altered menu item';
+    unset($items['test_altered_page']);
+  }
+  if (!empty($items['test_altered_page_new'])) {
+    $items['test_altered_page_new']['page callback'] = 'my_render_menu_test_item_altered_page';
+  }
+  foreach ($items as $route => $item) {
+    $result = module_invoke_all('my_render_menu_menu', $route, $item);
+    drupal_alter('my_render_menu_menu', $result, $route, $item);
+    foreach ($result as $subroute => $subitem) {
+      $items[$route . '/' . $subroute] = $subitem;
+    }
+  }
+}
+
+/**
+ * Implements hook_my_menu().
+ */
+
+function my_render_menu_my_render_menu_menu($route, $item) {
+  $subitems = array();
+  if ($route == 'admin/my_menu/history_of_badr') {
+    $subitems['wins'] = [
+      'title' => 'Win number 1',
+      'description' => 'Win number 1',
+      'page callback' => 'my_render_menu_history_of_badr_w_menu_page',
+      //'file' => 'my_render_menu.pages.inc',
+      'access callback' => TRUE,
+      'expanded' => TRUE,
+    ];
+  }
+  return $subitems;
+}
+
+function my_render_menu_history_of_badr_w_menu_page(){
+  return t("First win of Badr Hari");
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+
+function my_render_menu_preprocess_my_render_menu_content(&$variables) {
+
+  if (!empty($variables['my_render']['#attributes']['class'])) {
+    $variables['classes_array'] = array_merge($variables['classes_array'], $variables['my_render']['#attributes']['class']);
+  }
+
+  if (!empty($variables['my_render']['#attributes']['id'])) {
+    $variables['attributes_array']['id'] = $variables['my_render']['#attributes']['id'];
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+
+function my_render_menu_preprocess_my_render_menu_message(&$variables) {
+
+  $variables['classes_array'][] = 'message_for_user-' . 'id-' . $variables['id'];
+
+  $variables['classes_array'][] = 'message_for_user-' . $variables['zebra'];
+
+}
+
+
+
+
+
+
+
+
+
+
